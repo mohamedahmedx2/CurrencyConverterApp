@@ -17,11 +17,13 @@ class MainActivity : AppCompatActivity() {
     private var americanDollar: String = "American Dollar"
     private var AED: String = "AED "
     private var GBP: String = "GBP"
+    private var Euro : String = "Euro"
     private var values = mapOf(
         americanDollar to 1.0,
         egyptianPound to 48.33,
         AED to 3.67,
-        GBP to 0.78
+        GBP to 0.78,
+        Euro to 0.92
     )
     private lateinit var toDropDownMenu: AutoCompleteTextView
     private lateinit var fromDropDownMenu: AutoCompleteTextView
@@ -44,21 +46,19 @@ class MainActivity : AppCompatActivity() {
 
             //  بياخد القيمه من amountET بواسطه كلمه .text
 
-           // val amount = amountEt.text.toString().toDouble()
+            // val amount = amountEt.text.toString().toDouble()
 
 
-
-            try {
+            if (amountEt.text.toString().isNotEmpty()) {
                 var amount = amountEt.text.toString().toDouble()
 
                 var toValue = values[toDropDownMenu.text.toString()]
 
-                var fromValue  = values[fromDropDownMenu.text.toString()]
+                var fromValue = values[fromDropDownMenu.text.toString()]
                 var result = amount.times(toValue!!.div(fromValue!!))
                 resultTv.setText(result.toString())
-            }catch (ex:Exception)
-            {
-                Toast.makeText(this, "please select currency in from and to field", Toast.LENGTH_SHORT).show()
+            } else {
+                amountEt.error = "amount filed required"
             }
 
 
@@ -67,9 +67,6 @@ class MainActivity : AppCompatActivity() {
 
             //    دا اللي بياخد القيمه من edit text بتاع  from
             val currencyFromField = fromDropDownMenu.text.toString()
-
-
-
 
 
             /* These are the currency rates for the year 2024, July */
@@ -84,12 +81,12 @@ class MainActivity : AppCompatActivity() {
 
             // بيحط القيمه في EditTv بتاع result  بواسطه كلمه setText
 
-           // resultTv.setText(resultAmount.toString())
+            // resultTv.setText(resultAmount.toString())
         }
     }
 
     private fun popDropDownMenu() {
-        val listOfCountry = listOf(egyptianPound, americanDollar, AED, GBP)
+        val listOfCountry = listOf(egyptianPound, americanDollar, AED, GBP, Euro)
         val adapter = ArrayAdapter(this, R.layout.drop_down_list_item, listOfCountry)
         toDropDownMenu.setAdapter(adapter)
         fromDropDownMenu.setAdapter(adapter)
