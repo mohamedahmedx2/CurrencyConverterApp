@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 import java.nio.channels.FileChannel.MapMode
 
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private var americanDollar: String = "American Dollar"
     private var AED: String = "AED "
     private var GBP: String = "GBP"
-    private var Euro : String = "Euro"
+    private var Euro: String = "Euro"
     private var values = mapOf(
         americanDollar to 1.0,
         egyptianPound to 48.33,
@@ -40,8 +41,18 @@ class MainActivity : AppCompatActivity() {
         initializeViews()
         popDropDownMenu()
 
-        //دي function اللي بتعمل اكشن لل bottom وبعمل فيها كل حاجه عايز ال bottom يعملها //
+     amountEt.addTextChangedListener {
+       calculateResult()
+     }
+        fromDropDownMenu.setOnItemClickListener{ adapterView, view, i, l ->
+            calculateResult()
+        }
+        toDropDownMenu.setOnItemClickListener{ adapterView, view, i, l ->
+            calculateResult()
+        }
 
+
+        /*
         convertBtn.setOnClickListener {
 
             //  بياخد القيمه من amountET بواسطه كلمه .text
@@ -49,17 +60,7 @@ class MainActivity : AppCompatActivity() {
             // val amount = amountEt.text.toString().toDouble()
 
 
-            if (amountEt.text.toString().isNotEmpty()) {
-                var amount = amountEt.text.toString().toDouble()
 
-                var toValue = values[toDropDownMenu.text.toString()]
-
-                var fromValue = values[fromDropDownMenu.text.toString()]
-                var result = amount.times(toValue!!.div(fromValue!!))
-                resultTv.setText(result.toString())
-            } else {
-                amountEt.error = "amount filed required"
-            }
 
 
             //        دا اللي بياخد القيمه من edit text بتاع  to
@@ -82,6 +83,23 @@ class MainActivity : AppCompatActivity() {
             // بيحط القيمه في EditTv بتاع result  بواسطه كلمه setText
 
             // resultTv.setText(resultAmount.toString())
+        }
+         */
+
+    }
+
+    private fun calculateResult() {
+        if (amountEt.text.toString().isNotEmpty()) {
+            var amount = amountEt.text.toString().toDouble()
+
+            var toValue = values[toDropDownMenu.text.toString()]
+
+            var fromValue = values[fromDropDownMenu.text.toString()]
+            var result = amount.times(toValue!!.div(fromValue!!))
+            var resultFormat = String.format("%.3f", result)
+            resultTv.setText(resultFormat)
+        } else {
+            amountEt.error = "amount filed required"
         }
     }
 

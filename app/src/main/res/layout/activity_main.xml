@@ -131,6 +131,7 @@
         android:layout_margin="16dp"
         android:id="@+id/convert_button"
         android:layout_width="0dp"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#00BCD4"
