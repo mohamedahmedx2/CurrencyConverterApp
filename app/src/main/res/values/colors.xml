@@ -3,4 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="COLOR_CONVERTER">#642EC3</color>
+    <color name="COLOR_CONVERTER_TEXT">#FFFFFF</color>
+    <color name="COLOR_CONVERTER_BUTTON">#642EC3</color>
+    <color name="COLOR_CONVERTER_BUTTON_TEXT">#FFFFFF</color>
+    <color name="COLOR_CONVERTER_INPUT">#FFFFFF</color>
+    <color name="COLOR_CONVERTER_INPUT_TEXT">#000000</color>
+    <color name="COLOR_CONVERTER_INPUT_BORDER">#642EC3</color>
+    <color name="COLOR_CONVERTER_INPUT_BORDER_FOCUS">#642EC3</color>
+
 </resources>

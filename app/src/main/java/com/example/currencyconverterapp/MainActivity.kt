@@ -1,16 +1,19 @@
 package com.example.currencyconverterapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
-import java.nio.channels.FileChannel.MapMode
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var convertBtn: Button
     private lateinit var amountEt: TextInputEditText
     private lateinit var resultTv: TextInputEditText
+    private lateinit var toolBar: Toolbar
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,14 +44,28 @@ class MainActivity : AppCompatActivity() {
         //  var convertBtn1 = findViewById<Button>(R.id.convert_button)
         initializeViews()
         popDropDownMenu()
+        toolBar.inflateMenu(R.menu.options_menu)
+        toolBar.setOnMenuItemClickListener {
 
-     amountEt.addTextChangedListener {
-       calculateResult()
-     }
-        fromDropDownMenu.setOnItemClickListener{ adapterView, view, i, l ->
+            var message = "${amountEt.text.toString()} ${fromDropDownMenu.text}" + " is equal to " +
+                    "${resultTv.text.toString()} ${toDropDownMenu.text}"
+            var shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.setType("text/plain")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, message)
+
+            startActivity(shareIntent)
+            true
+
+        }
+
+
+        amountEt.addTextChangedListener {
             calculateResult()
         }
-        toDropDownMenu.setOnItemClickListener{ adapterView, view, i, l ->
+        fromDropDownMenu.setOnItemClickListener { adapterView, view, i, l ->
+            calculateResult()
+        }
+        toDropDownMenu.setOnItemClickListener { adapterView, view, i, l ->
             calculateResult()
         }
 
@@ -88,6 +106,28 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.options_menu, menu)
+//        return true
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.share_menu -> {
+//                Toast.makeText(this, "share", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            R.id.settings_menu -> {
+//                Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            R.id.contact_menu -> {
+//                Toast.makeText(this, "help", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        return true
+//    }
+
     private fun calculateResult() {
         if (amountEt.text.toString().isNotEmpty()) {
             var amount = amountEt.text.toString().toDouble()
@@ -117,6 +157,7 @@ class MainActivity : AppCompatActivity() {
         resultTv = findViewById(R.id.result_et)
         toDropDownMenu = findViewById(R.id.autoComplete_tv2)
         fromDropDownMenu = findViewById(R.id.autoComplete_tv)
+        toolBar = findViewById(R.id.toolbar)
     }
 
 
